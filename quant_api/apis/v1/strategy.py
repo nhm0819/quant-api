@@ -9,6 +9,7 @@ import pandas as pd
 import json
 from quant_api.configs import settings
 from quant_api.schemas import strategy
+from quant_api.utils import encoder
 
 import asyncio
 
@@ -45,19 +46,19 @@ async def get_multi_asset_result(symbols: list, interval: str = "1m", limit: int
             {
                 "open": "int",
                 "close": "int",
-                "openPrice": "float32",
-                "high": "float32",
-                "low": "float32",
-                "last": "float32",
-                "volume": "float32",
-                "quoteVolume": "float32",
+                "openPrice": "float",
+                "high": "float",
+                "low": "float",
+                "last": "float",
+                "volume": "float",
+                "quoteVolume": "float",
             }
         )
 
         trade_df = pd.DataFrame(await get_trades(symbol=symbol, limit=limit))
         trade_df = trade_df.rename(columns={"qty": "quantity"})
         trade_df = trade_df.astype(
-            {"price": "float32", "quantity": "float32", "quoteQty": "float32"}
+            {"price": "float", "quantity": "float", "quoteQty": "float"}
         )
         trade_df["side"] = trade_df.apply(
             lambda row: "BUY" if row["isBuyerMaker"] else "SELL", axis=1
@@ -69,20 +70,21 @@ async def get_multi_asset_result(symbols: list, interval: str = "1m", limit: int
     result = multi_asset_crypto_strategy.run_iteration(
         klines_data=klines_data, trades_data=trades_data
     )
-    # print(result)
-    return json.dumps(result)
+
+    return json.dumps(result, cls=encoder.EnhancedJSONEncoder)
 
 
-async def unit_test(symbols: list, interval: str = "1m"):
-    result = get_multi_asset_result(symbols, interval)
+async def unit_test(symbols: list, interval: str = "1m", limit: int = 500):
+    result = await get_multi_asset_result(symbols, interval, limit=limit)
+    print(result)
     return result
 
 
 if __name__ == "__main__":
 
-    symbols = ["BTC-USDT"]
+    symbols = ["BTC-USDT", "ETH-USDT"]
     interval = "1m"
 
-    res = asyncio.run(unit_test(symbols=symbols, interval=interval))
+    res = asyncio.run(unit_test(symbols=symbols, interval=interval, limit=1000))
 
     print("end")

@@ -1,6 +1,10 @@
 .DS_Store
 .idea
 .git
-**/*.log
+**/*.log*
+**/__pycache__
 pytest_report.html
 assets
+
+logging.yaml
+gunicorn.conf.py

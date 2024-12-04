@@ -1,0 +1,10 @@
+fixtures
+helm
+helms
+
+.idea
+.git
+.DS_Store
+.dockerignore
+**/*.log
+

@@ -1,0 +1,6 @@
+.DS_Store
+.idea
+.git
+**/*.log
+pytest_report.html
+assets

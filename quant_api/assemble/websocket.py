@@ -3,6 +3,7 @@ from websockets.exceptions import ConnectionClosed
 from fastapi.websockets import WebSocket, WebSocketDisconnect
 import asyncio
 
+
 async def proxy_websocket(client_ws: WebSocket, server_uri: str):
     """
     클라이언트 WebSocket과 외부 WebSocket 서버를 연결하고 데이터를 중계합니다.

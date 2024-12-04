@@ -6,6 +6,7 @@ from quant_api.configs import settings as default_settings
 
 logger = logging.getLogger(__name__)
 
+
 async def startup_event_1():
     logger.info(f"Default Params:")
     for key, value in default_settings.dict().items():

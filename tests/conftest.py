@@ -42,7 +42,8 @@ async def async_client():
     from quant_api.apps.v1 import app
 
     async with AsyncClient(
-            transport=ASGITransport(app=app), base_url="http://testserver") as ac:
+        transport=ASGITransport(app=app), base_url="http://testserver"
+    ) as ac:
         print("Creating a client..")
         yield ac
 

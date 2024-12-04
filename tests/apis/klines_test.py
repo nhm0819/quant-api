@@ -20,8 +20,10 @@ def test_ws_klines(client: TestClient) -> None:
     symbol = "BTCUSDT"
     interval = "1s"
 
-    with client.websocket_connect(f"/v1/klines/ws/{symbol}@kline_{interval}") as websocket:
-    #     while True:
+    with client.websocket_connect(
+        f"/v1/klines/ws/{symbol}@kline_{interval}"
+    ) as websocket:
+        #     while True:
         try:
             data = websocket.receive_json()
             print(data)

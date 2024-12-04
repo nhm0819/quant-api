@@ -15,14 +15,16 @@ router = APIRouter(prefix="/klines")
 
 
 @router.get("/get/{symbol}/{interval}", response_class=JSONResponse)
-async def get_klines(symbol: str, interval: str = "1m",
-                     startTime: Optional[int] = None,
-                     endTime: Optional[int] = None,
-                     timeZone: Optional[str] = "0",
-                     limit: Optional[int] = 500
-                     ):
+async def get_klines(
+    symbol: str,
+    interval: str = "1m",
+    startTime: Optional[int] = None,
+    endTime: Optional[int] = None,
+    timeZone: Optional[str] = "0",
+    limit: Optional[int] = 500,
+):
     params = {
-        "symbol": symbol,
+        "symbol": symbol.replace("-", ""),
         "interval": interval,
         "timeZone": timeZone,
         "limit": limit,
@@ -34,12 +36,13 @@ async def get_klines(symbol: str, interval: str = "1m",
 
     async with httpx.AsyncClient() as client:
         response = await client.get(
-            url=f"https://{settings.BINANCE_API_HOST}/api/v3/klines",
-            params=params
+            url=f"https://{settings.BINANCE_API_HOST}/api/v3/klines", params=params
         )
 
         if response.status_code != 200:
-            raise HTTPException(status_code=response.status_code, detail="Binance API Error")
+            raise HTTPException(
+                status_code=response.status_code, detail="Binance API Error"
+            )
 
     response_json = response.json()
     return response_json
@@ -53,4 +56,3 @@ async def unit_test(symbol: str, interval: str = "1m"):
 
 if __name__ == "__main__":
     result = asyncio.run(unit_test(symbol="BTCUSDT", interval="1s"))
-

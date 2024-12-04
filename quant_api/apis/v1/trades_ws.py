@@ -16,7 +16,6 @@ async def ws_trade(client_ws: WebSocket, symbol: str):
     await proxy_websocket(client_ws, server_uri)
 
 
-
 async def unit_test(client, symbol: str):
 
     # binance trade ws test

@@ -20,7 +20,7 @@ def test_ws_trade(client: TestClient) -> None:
     symbol = "BTCUSDT"
 
     with client.websocket_connect(f"/v1/trades/ws/{symbol}@trade") as websocket:
-    #     while True:
+        #     while True:
         try:
             data = websocket.receive_json()
             print(data)

@@ -23,7 +23,7 @@ async def get_trades(symbol: str, limit: Optional[int] = 500):
 
     async with httpx.AsyncClient() as client:
         response = await client.get(
-            url=f"https://{settings.BINANCE_API_HOST}/api/v3/trades", params=params
+            url=f"{settings.BINANCE_API_URL}/api/v3/trades", params=params
         )
 
         if response.status_code != 200:

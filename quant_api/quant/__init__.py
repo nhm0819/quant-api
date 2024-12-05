@@ -43,7 +43,7 @@ class MultiAssetCryptoStrategy:
         rsi_thresholds: Tuple[float, float] = (30, 70),
     ):
         """
-        Initialize the multi-asset cryptocurrency trading strategy.
+        Initialize the multi-asset cryptocurrency trading quant.
 
         Args:
             symbols: List of trading pairs (e.g., ['BTC-USDT', 'ETH-USDT'])
@@ -578,7 +578,7 @@ class MultiAssetCryptoStrategy:
         self, klines_data: Dict[str, pd.DataFrame], trades_data: Dict[str, pd.DataFrame]
     ) -> List[Order]:
         """
-        Run a complete iteration of the strategy.
+        Run a complete iteration of the quant.
         klines_data : Dict[str, pd.DataFrame] = {"symbol_1": klines_df_2, "symbol_2": klines_df_2}
         trades_data : Dict[str, pd.DataFrame] = {"symbol_1": trades_df_2, "symbol_2": trades_df_2}
         """

@@ -12,7 +12,7 @@ router = APIRouter(prefix="/klines/ws", tags=["klines WS"])
 async def ws_klines(client_ws: WebSocket, symbol: str, interval: str = "1m"):
     await client_ws.accept()
     server_uri = (
-        f"wss://{settings.BINANCE_WS_HOST}/ws/{symbol.lower()}@kline_{interval}"
+        f"{settings.BINANCE_WS_URL}/ws/{symbol.lower()}@kline_{interval}"
     )
     await proxy_websocket(client_ws, server_uri)
 
@@ -21,7 +21,7 @@ async def unit_test(client, symbol: str, interval: str = "1m"):
 
     # binance kline ws test
     server_uri = (
-        f"wss://{settings.BINANCE_WS_HOST}/ws/{symbol.lower()}@kline_{interval}"
+        f"{settings.BINANCE_WS_URL}/ws/{symbol.lower()}@kline_{interval}"
     )
     try:
         async with websockets.connect(server_uri) as binance_ws:

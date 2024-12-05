@@ -12,14 +12,14 @@ router = APIRouter(prefix="/trades/ws", tags=["Trade WS"])
 @router.websocket("/{symbol}@trade")
 async def ws_trade(client_ws: WebSocket, symbol: str):
     await client_ws.accept()
-    server_uri = f"wss://{settings.BINANCE_WS_HOST}/ws/{symbol.lower()}@trade"
+    server_uri = f"{settings.BINANCE_WS_URL}/ws/{symbol.lower()}@trade"
     await proxy_websocket(client_ws, server_uri)
 
 
 async def unit_test(client, symbol: str):
 
     # binance trade ws test
-    server_uri = f"wss://{settings.BINANCE_WS_HOST}/ws/{symbol.lower()}@trade"
+    server_uri = f"{settings.BINANCE_WS_URL}/ws/{symbol.lower()}@trade"
     try:
         async with websockets.connect(server_uri) as binance_ws:
             data = await binance_ws.recv()

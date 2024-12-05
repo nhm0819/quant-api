@@ -1,10 +1,11 @@
 from pydantic import BaseModel, Field
-from typing import List, Dict, Tuple
+from typing import List, Dict, Tuple, Optional
 import uuid
+import datetime
 
 
-class MultiAssetCryptoStrategyCreate(BaseModel):
-    symbols: List[str]
+class MultiAssetCryptoStrategy(BaseModel):
+    symbols: List[str] = ["BTCUSDT", "ETHUSDT"]
     leverage: float = 1.0
     lookback_periods: Dict[str, int] = {
         "volume": 24,  # Hours for volume profile
@@ -12,7 +13,7 @@ class MultiAssetCryptoStrategyCreate(BaseModel):
         "correlation": 168,  # Hours for correlation calculation
         "momentum": 12,  # Hours for momentum signals
     }
-    position_limits: Dict[str, float] = None
+    position_limits: Optional[Dict[str, float]] = Field(default=None)
     vol_window: int = 24
     vol_threshold: float = 2.0
     min_trade_volume: float = 1000000  # Minimum USD volume

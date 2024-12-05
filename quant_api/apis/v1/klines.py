@@ -7,6 +7,8 @@ import httpx
 import websockets
 import json
 from quant_api.configs import settings
+from quant_api.schemas import market
+from quant_api.utils.binance_market import BinanceMarket
 from typing import Optional
 
 import asyncio
@@ -36,7 +38,7 @@ async def get_klines(
 
     async with httpx.AsyncClient() as client:
         response = await client.get(
-            url=f"https://{settings.BINANCE_API_HOST}/api/v3/klines", params=params
+            url=f"{settings.BINANCE_API_URL}/api/v3/klines", params=params
         )
 
         if response.status_code != 200:
@@ -46,6 +48,7 @@ async def get_klines(
 
     response_json = response.json()
     return response_json
+
 
 
 async def unit_test(symbol: str, interval: str = "1m"):
